@@ -1,0 +1,24 @@
+﻿<Window x:Class="FractalSerpinskogo2D.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="700" Width="1200">
+    <Grid Margin="10">
+        <DockPanel LastChildFill="True">
+            <Grid MinWidth="200">
+                <Border BorderBrush="Black" BorderThickness="1">
+                    <DockPanel LastChildFill="false">
+                        <Button Name="refreshPlot" Click="RefreshPlot_OnClick" DockPanel.Dock="Top" Content="Refresh" FontFamily="Times New Roman" FontSize="14" MaxHeight="30" Margin="5" Padding="5"></Button>
+                    </DockPanel>
+                </Border>
+            </Grid>
+            <Grid>
+                <Border BorderBrush="Black" BorderThickness="1">
+                    <WpfPlot Name="FractalPlot" BorderBrush="Black" BorderThickness="1"></WpfPlot>
+                </Border>
+            </Grid>
+        </DockPanel>
+    </Grid>
+</Window>
