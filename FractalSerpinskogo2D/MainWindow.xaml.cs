@@ -6,9 +6,20 @@ namespace FractalSerpinskogo2D
 {
     public partial class MainWindow : Window
     {
+        private Point A;
+        private Point B;
+        private Point C;
+        private Point P;
+        private Random random;
+        private bool isPaused;
+        private int currentCycleState;
+
         public MainWindow()
         {
             InitializeComponent();
+            isPaused = false;
+            currentCycleState = 0;
+            random = new Random();
         }
 
         public class Point
@@ -18,8 +29,8 @@ namespace FractalSerpinskogo2D
 
             public Point(double x, double y)
             {
-                this.X = x;
-                this.Y = y;
+                X = x;
+                Y = y;
             }
         }
 
@@ -33,13 +44,39 @@ namespace FractalSerpinskogo2D
             return (areaPAB + areaPBC + areaPAC) == areaABC;
         }
 
+        private void DrawPoints()
+        {
+            for (int i = 0; i < 10000; i++)
+            {
+                int rollResult = random.Next(1, 6);
+
+                if (rollResult == 1 || rollResult == 2)
+                {
+                    Point newPoint = new Point((P.X + A.X) / 2, (P.Y + A.Y) / 2);
+                    FractalPlot.Plot.AddPoint(newPoint.X, newPoint.Y, Color.BlueViolet);
+                    P = newPoint;
+                }
+                if (rollResult == 3 || rollResult == 4)
+                {
+                    Point newPoint = new Point((P.X + B.X) / 2, (P.Y + B.Y) / 2);
+                    FractalPlot.Plot.AddPoint(newPoint.X, newPoint.Y, Color.BlueViolet);
+                    P = newPoint;
+                }
+                if (rollResult == 5 || rollResult == 6)
+                {
+                    Point newPoint = new Point((P.X + C.X) / 2, (P.Y + C.Y) / 2);
+                    FractalPlot.Plot.AddPoint(newPoint.X, newPoint.Y, Color.BlueViolet);
+                    P = newPoint;
+                }
+            }
+        }
+
         private void RefreshPlot_OnClick(object sender, RoutedEventArgs e)
         {
             FractalPlot.Plot.Clear();
-            Random random = new Random();
-            Point A = new Point(random.Next(1, 20), random.Next(1, 20));
-            Point B = new Point(random.Next(40, 80), random.Next(50, 100));
-            Point C = new Point(random.Next(80, 100), random.Next(1, 20));
+            A = new Point(random.Next(1, 20), random.Next(1, 20));
+            B = new Point(random.Next(40, 80), random.Next(50, 100));
+            C = new Point(random.Next(80, 100), random.Next(1, 20));
 
             var yMin = A.Y < C.Y ? A.Y - 1 : C.Y - 1;
             var yMax = B.Y - 1;
@@ -47,7 +84,7 @@ namespace FractalSerpinskogo2D
             var xMin = A.X - 1;
             var xMax = C.X - 1;
 
-            Point P = new Point(random.Next(Convert.ToInt32(xMin), Convert.ToInt32(xMax)), random.Next(Convert.ToInt32(yMin), Convert.ToInt32(yMax)));
+            P = new Point(random.Next(Convert.ToInt32(xMin), Convert.ToInt32(xMax)), random.Next(Convert.ToInt32(yMin), Convert.ToInt32(yMax)));
 
             while (!IsPointInTriangle(A, B, C, P))
             {
@@ -62,8 +99,39 @@ namespace FractalSerpinskogo2D
             FractalPlot.Plot.AddPoint(P.X, P.Y, Color.Black);
 
             FractalPlot.Refresh();
+        }
 
+        private void StartButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            for (int i = 0; i < 100000; i++)
+            {
+                int rollResult = random.Next(1, 6);
 
+                if (rollResult == 1 || rollResult == 2)
+                {
+                    Point newPoint = new Point((P.X + A.X) / 2, (P.Y + A.Y) / 2);
+                    FractalPlot.Plot.AddPoint(newPoint.X, newPoint.Y, Color.BlueViolet);
+                    P = newPoint;
+                }
+                if (rollResult == 3 || rollResult == 4)
+                {
+                    Point newPoint = new Point((P.X + B.X) / 2, (P.Y + B.Y) / 2);
+                    FractalPlot.Plot.AddPoint(newPoint.X, newPoint.Y, Color.BlueViolet);
+                    P = newPoint;
+                }
+                if (rollResult == 5 || rollResult == 6)
+                {
+                    Point newPoint = new Point((P.X + C.X) / 2, (P.Y + C.Y) / 2);
+                    FractalPlot.Plot.AddPoint(newPoint.X, newPoint.Y, Color.BlueViolet);
+                    P = newPoint;
+                }
+            }
+            FractalPlot.Refresh();
+        }
+
+        private void PauseButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            isPaused = true;
         }
     }
 }
