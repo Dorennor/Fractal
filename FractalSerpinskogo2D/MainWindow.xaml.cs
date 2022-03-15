@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 using System.Windows.Threading;
 using Color = System.Drawing.Color;
 
@@ -14,15 +16,18 @@ namespace FractalSerpinskogo2D
         private Point C;
         private Point P;
         private Random random;
-        private bool isPaused;
-        private int currentCycleState;
+        private int currentCycleState = default;
+        private CancellationTokenSource source;
+        private CancellationToken token;
+        private int maxIterations = default;
 
         public MainWindow()
         {
             InitializeComponent();
-            isPaused = false;
             currentCycleState = 0;
             random = new Random();
+            source = new CancellationTokenSource();
+            token = source.Token;
         }
 
         public class Point
@@ -47,10 +52,16 @@ namespace FractalSerpinskogo2D
             return (areaPAB + areaPBC + areaPAC) == areaABC;
         }
 
-        private void DrawPointsAsync(Point A, Point B, Point C, Point P, Random random)
+        private void DrawPointsAsync(Point A, Point B, Point C, Point P, Random random, CancellationToken token)
         {
-            for (int i = 0; i < 10000; i++)
+            for (int i = currentCycleState; i < maxIterations; i++)
             {
+                if (token.IsCancellationRequested)
+                {
+                    currentCycleState = i;
+                    return;
+                }
+
                 int rollResult = random.Next(1, 6);
 
                 if (rollResult == 1 || rollResult == 2)
@@ -84,12 +95,14 @@ namespace FractalSerpinskogo2D
                     }), DispatcherPriority.Background);
                     P = newPoint;
                 }
+                Thread.Sleep(10);
             }
         }
 
         private void StartButton_OnClick(object sender, RoutedEventArgs e)
         {
-            Task.Factory.StartNew(() => DrawPointsAsync(A, B, C, P, random));
+            maxIterations = Convert.ToInt32(IterationsNumber.Text);
+            Task task = Task.Factory.StartNew(() => DrawPointsAsync(A, B, C, P, random, token));
         }
 
         private void RefreshPlot_OnClick(object sender, RoutedEventArgs e)
@@ -124,10 +137,17 @@ namespace FractalSerpinskogo2D
 
         private void PauseButton_OnClick(object sender, RoutedEventArgs e)
         {
-            CancellationTokenSource source = new CancellationTokenSource();
-            CancellationToken token = source.Token;
-
             source.Cancel();
+            source.Dispose();
+
+            source = new CancellationTokenSource();
+            token = source.Token;
+        }
+
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }
