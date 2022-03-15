@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 using Color = System.Drawing.Color;
 
 namespace FractalSerpinskogo2D
@@ -44,7 +47,7 @@ namespace FractalSerpinskogo2D
             return (areaPAB + areaPBC + areaPAC) == areaABC;
         }
 
-        private void DrawPoints()
+        private void DrawPointsAsync(Point A, Point B, Point C, Point P, Random random)
         {
             for (int i = 0; i < 10000; i++)
             {
@@ -53,22 +56,40 @@ namespace FractalSerpinskogo2D
                 if (rollResult == 1 || rollResult == 2)
                 {
                     Point newPoint = new Point((P.X + A.X) / 2, (P.Y + A.Y) / 2);
-                    FractalPlot.Plot.AddPoint(newPoint.X, newPoint.Y, Color.BlueViolet);
+                    Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        FractalPlot.Plot.AddPoint(newPoint.X, newPoint.Y, Color.BlueViolet);
+                        FractalPlot.Refresh();
+                    }), DispatcherPriority.Background);
                     P = newPoint;
                 }
                 if (rollResult == 3 || rollResult == 4)
                 {
                     Point newPoint = new Point((P.X + B.X) / 2, (P.Y + B.Y) / 2);
-                    FractalPlot.Plot.AddPoint(newPoint.X, newPoint.Y, Color.BlueViolet);
+
+                    Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        FractalPlot.Plot.AddPoint(newPoint.X, newPoint.Y, Color.BlueViolet);
+                        FractalPlot.Refresh();
+                    }), DispatcherPriority.Background);
                     P = newPoint;
                 }
                 if (rollResult == 5 || rollResult == 6)
                 {
                     Point newPoint = new Point((P.X + C.X) / 2, (P.Y + C.Y) / 2);
-                    FractalPlot.Plot.AddPoint(newPoint.X, newPoint.Y, Color.BlueViolet);
+                    Dispatcher.BeginInvoke(new Action(() =>
+                    {
+                        FractalPlot.Plot.AddPoint(newPoint.X, newPoint.Y, Color.BlueViolet);
+                        FractalPlot.Refresh();
+                    }), DispatcherPriority.Background);
                     P = newPoint;
                 }
             }
+        }
+
+        private void StartButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            Task.Factory.StartNew(() => DrawPointsAsync(A, B, C, P, random));
         }
 
         private void RefreshPlot_OnClick(object sender, RoutedEventArgs e)
@@ -101,37 +122,12 @@ namespace FractalSerpinskogo2D
             FractalPlot.Refresh();
         }
 
-        private void StartButton_OnClick(object sender, RoutedEventArgs e)
-        {
-            for (int i = 0; i < 100000; i++)
-            {
-                int rollResult = random.Next(1, 6);
-
-                if (rollResult == 1 || rollResult == 2)
-                {
-                    Point newPoint = new Point((P.X + A.X) / 2, (P.Y + A.Y) / 2);
-                    FractalPlot.Plot.AddPoint(newPoint.X, newPoint.Y, Color.BlueViolet);
-                    P = newPoint;
-                }
-                if (rollResult == 3 || rollResult == 4)
-                {
-                    Point newPoint = new Point((P.X + B.X) / 2, (P.Y + B.Y) / 2);
-                    FractalPlot.Plot.AddPoint(newPoint.X, newPoint.Y, Color.BlueViolet);
-                    P = newPoint;
-                }
-                if (rollResult == 5 || rollResult == 6)
-                {
-                    Point newPoint = new Point((P.X + C.X) / 2, (P.Y + C.Y) / 2);
-                    FractalPlot.Plot.AddPoint(newPoint.X, newPoint.Y, Color.BlueViolet);
-                    P = newPoint;
-                }
-            }
-            FractalPlot.Refresh();
-        }
-
         private void PauseButton_OnClick(object sender, RoutedEventArgs e)
         {
-            isPaused = true;
+            CancellationTokenSource source = new CancellationTokenSource();
+            CancellationToken token = source.Token;
+
+            source.Cancel();
         }
     }
 }
