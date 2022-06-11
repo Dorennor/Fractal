@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ScottPlot" Version="4.1.33" />
+    <PackageReference Include="ScottPlot.WPF" Version="4.1.33" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="UI\ViewModels\LR1\" />
+    <Folder Include="UI\ViewModels\LR2\" />
+    <Folder Include="UI\ViewModels\LR3\" />
+    <Folder Include="UI\ViewModels\LR4\" />
+    <Folder Include="UI\ViewModels\LR5\" />
+    <Folder Include="UI\Resources\" />
+    <Folder Include="UI\Views\LR1\" />
+    <Folder Include="UI\Views\LR2\" />
+    <Folder Include="UI\Views\LR3\" />
+    <Folder Include="UI\Views\LR4\" />
+    <Folder Include="UI\Views\LR5\" />
+  </ItemGroup>
+
+</Project>
