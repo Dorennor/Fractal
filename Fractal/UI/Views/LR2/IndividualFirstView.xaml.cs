@@ -1,9 +1,9 @@
-﻿using System.Drawing;
+﻿using Fractal.Extensions;
+using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using Fractal.Extensions;
 
 namespace Fractal.UI.Views.LR2;
 

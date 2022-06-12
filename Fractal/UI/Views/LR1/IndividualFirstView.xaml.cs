@@ -120,7 +120,6 @@ public partial class IndividualFirstView : UserControl
 
         _graph.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
-
         _graph.Clear(Color.Black);
 
         DrawFern(width, height, Convert.ToDouble(imageBoxSize));
