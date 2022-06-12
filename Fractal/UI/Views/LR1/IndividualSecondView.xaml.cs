@@ -1,5 +1,4 @@
 ﻿using Fractal.Extensions;
-using System;
 using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -10,45 +9,51 @@ namespace Fractal.UI.Views.LR1;
 
 public partial class IndividualSecondView : UserControl
 {
-    public Graphics g;
+    public Graphics graphics;
     public Bitmap map;
     public Pen p;
-    public double angle = Math.PI / 2;
-    public double ang1 = Math.PI / 4;
-    public double ang2 = Math.PI / 6;
 
     public IndividualSecondView()
     {
         InitializeComponent();
     }
 
-    public int DrawTree(double x, double y, double a, double angle)
+    private void DrawDragon(int x1, int y1, int x2, int y2, int n, Graphics g, Pen pen)
     {
-        if (a > 2)
+        int xn, yn;
+
+        if (n > 0)
         {
-            a *= 0.7;
+            xn = (x1 + x2) / 2 + (y2 - y1) / 2;
+            yn = (y1 + y2) / 2 - (x2 - x1) / 2;
 
-            double xnew = Math.Round(x + a * Math.Cos(angle)), ynew = Math.Round(y - a * Math.Sin(angle));
-
-            g.DrawLine(p, (float)x, (float)y, (float)xnew, (float)ynew);
-
-            x = xnew;
-            y = ynew;
-
-            DrawTree(x, y, a, angle + ang1);
-            DrawTree(x, y, a, angle - ang2);
+            DrawDragon(x2, y2, xn, yn, n - 1, g, pen);
+            DrawDragon(x1, y1, xn, yn, n - 1, g, pen);
         }
-        return 0;
+
+        var point1 = new System.Drawing.Point(x1, y1);
+        var point2 = new System.Drawing.Point(x2, y2);
+        g.DrawLine(pen, point1, point2);
     }
 
     private void DrawButton_OnClick(object sender, RoutedEventArgs e)
     {
         map = new Bitmap(int.Parse(Width.Text), int.Parse(Height.Text));
-        g = Graphics.FromImage(map);
-        g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-        p = new Pen(Color.BlueViolet);
+        graphics = Graphics.FromImage(map);
+        graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+        p = new Pen(Color.DarkRed);
 
-        DrawTree(300, 450, int.Parse(IterationsNumber.Text), angle);
+        graphics.Clear(Color.Black);
+
+        int x1, y1, x2, y2, k;
+
+        x1 = 200;
+        y1 = 200;
+        x2 = 390;
+        y2 = 400;
+        k = 15;
+
+        DrawDragon(x1, y1, x2, y2, k, graphics, p);
 
         FractalImage.Source = map.GetImageSource();
     }

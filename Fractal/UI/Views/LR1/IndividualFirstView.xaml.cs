@@ -78,7 +78,7 @@ public partial class IndividualFirstView : UserControl
 
             try
             {
-                _fern.SetPixel((int)x, (int)y, Color.BlueViolet);
+                _fern.SetPixel((int)x, (int)y, Color.Orange);
             }
             catch
             {
@@ -120,7 +120,7 @@ public partial class IndividualFirstView : UserControl
 
         _graph.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
-        _graph.Clear(Color.Black);
+        _graph.Clear(Color.White);
 
         DrawFern(width, height, Convert.ToDouble(imageBoxSize));
     }

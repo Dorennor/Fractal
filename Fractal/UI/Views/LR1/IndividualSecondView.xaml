@@ -15,7 +15,6 @@
                             <Button Name="DrawButton" Click="DrawButton_OnClick" Content="Draw" FontFamily="Times New Roman" FontSize="14" MaxHeight="30" Margin="5" Padding="5"></Button>
                             <TextBox Name="Width" Text="600" PreviewTextInput="NumberValidationTextBox" FontFamily="Times New Roman" FontSize="14" MaxHeight="30" Margin="5" Padding="5"></TextBox>
                             <TextBox Name="Height" Text="600" PreviewTextInput="NumberValidationTextBox" FontFamily="Times New Roman" FontSize="14" MaxHeight="30" Margin="5" Padding="5"></TextBox>
-                            <TextBox Name="IterationsNumber" Text="200" PreviewTextInput="NumberValidationTextBox" FontFamily="Times New Roman" FontSize="14" MaxHeight="30" Margin="5" Padding="5"></TextBox>
                         </StackPanel>
                     </Border>
                 </Grid>

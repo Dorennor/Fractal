@@ -25,7 +25,7 @@ public partial class SquareView : UserControl
     {
         if (level == 0)
         {
-            _graph.FillRectangle(Brushes.BlueViolet, carpet);
+            _graph.FillRectangle(Brushes.DarkRed, carpet);
         }
         else
         {
@@ -53,25 +53,16 @@ public partial class SquareView : UserControl
 
     private void DrawButton_OnClick(object sender, RoutedEventArgs e)
     {
-        if (Width.Text == String.Empty || Height.Text == String.Empty)
-        {
-            MessageBox.Show("Wrong width or height!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            return;
-        }
         var width = int.Parse(Width.Text);
         var height = int.Parse(Height.Text);
-
-        if (width <= 0 || height <= 0)
-        {
-            MessageBox.Show("Wrong width or height!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-            return;
-        }
-
+        
         FractalImage.Source = null;
 
         _fractal = new Bitmap(width, height);
 
         _graph = Graphics.FromImage(_fractal);
+
+        _graph.Clear(Color.Black);
 
         _graph.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
