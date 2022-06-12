@@ -1,9 +1,45 @@
 ﻿<Application x:Class="Fractal.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:Fractal"
+             xmlns:lr1Viewmodels="clr-namespace:Fractal.UI.ViewModels.LR1"
+             xmlns:lr2Viewmodels="clr-namespace:Fractal.UI.ViewModels.LR2"
+             xmlns:lr3Viewmodels="clr-namespace:Fractal.UI.ViewModels.LR3"
+             xmlns:lr1Views="clr-namespace:Fractal.UI.Views.LR1"
+             xmlns:lr2Views="clr-namespace:Fractal.UI.Views.LR2"
+             xmlns:lr3Views="clr-namespace:Fractal.UI.Views.LR3"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <DataTemplate DataType="{x:Type lr1Viewmodels:TriangleViewModel}">
+            <lr1Views:TriangleView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type lr1Viewmodels:SquareViewModel}">
+            <lr1Views:SquareView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type lr1Viewmodels:IndividualFirstViewModel}">
+            <lr1Views:IndividualFirstView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type lr1Viewmodels:IndividualSecondViewModel}">
+            <lr1Views:IndividualSecondView />
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type lr2Viewmodels:IndividualFirstViewModel}">
+            <lr2Views:IndividualFirstView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type lr2Viewmodels:IndividualSecondViewModel}">
+            <lr2Views:IndividualSecondView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type lr2Viewmodels:SnowflakeViewModel}">
+            <lr2Views:SnowflakeView />
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type lr3Viewmodels:IndividualFirstViewModel}">
+            <lr3Views:IndividualFirstView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type lr3Viewmodels:IndividualSecondViewModel}">
+            <lr3Views:IndividualSecondView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type lr3Viewmodels:MandelbortViewModel}">
+            <lr3Views:MandelbortView />
+        </DataTemplate>
     </Application.Resources>
 </Application>

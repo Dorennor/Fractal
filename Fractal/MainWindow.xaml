@@ -3,26 +3,54 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewModels="clr-namespace:Fractal.UI.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="800" Width="1200">
-    <Grid Margin="10">
-        <DockPanel LastChildFill="True">
-            <Grid MinWidth="200">
-                <Border BorderBrush="Black" BorderThickness="1">
-                    <StackPanel Orientation="Vertical">
-                        <Button Name="RefreshPlot" Click="RefreshPlot_OnClick" Content="Refresh" FontFamily="Times New Roman" FontSize="14" MaxHeight="30" Margin="5" Padding="5"></Button>
-                        <Button Name="StartButton" Click="StartButton_OnClick" Content="Start" FontFamily="Times New Roman" FontSize="14" MaxHeight="30" Margin="5" Padding="5"></Button>
-                        <Button Name="ContinueButton" Click="ContinueButton_OnClick" Content="Continue" FontFamily="Times New Roman" FontSize="14" MaxHeight="30" Margin="5" Padding="5"></Button>
-                        <Button Name="PauseButton" Click="PauseButton_OnClick" Content="Pause" FontFamily="Times New Roman" FontSize="14" MaxHeight="30" Margin="5" Padding="5"></Button>
-                        <TextBox Name="IterationsNumber" PreviewTextInput="NumberValidationTextBox" FontFamily="Times New Roman" FontSize="14" MaxHeight="30" Margin="5" Padding="5"></TextBox>
-                    </StackPanel>
-                </Border>
-            </Grid>
-            <Grid>
-                <Border BorderBrush="Black" BorderThickness="1">
-                    <WpfPlot Name="FractalPlot" BorderBrush="Black" BorderThickness="1"></WpfPlot>
-                </Border>
-            </Grid>
-        </DockPanel>
-    </Grid>
+    <Window.DataContext>
+        <viewModels:MainViewModel></viewModels:MainViewModel>
+    </Window.DataContext>
+
+    <Border BorderBrush="Black" BorderThickness="1">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" BorderBrush="Black" BorderThickness="1">
+                <StackPanel Orientation="Vertical">
+                    <Label Content="Лабораторна робота №1"></Label>
+                    <Border BorderBrush="Black" BorderThickness="0, 1,0,1">
+                        <StackPanel Orientation="Vertical">
+                            <Button Content="Серветка Серпинського" Margin="5" Command="{Binding TriangleViewModelCommand}"></Button>
+                            <Button Content="Килим Серпинського" Margin="5" Command="{Binding SquareViewModelCommand}"></Button>
+                            <Button Content="Індивідуальне завдання №1" Margin="5" Command="{Binding LR1IndividualFirstViewModelCommand}"></Button>
+                            <Button Content="Індивідуальне завдання №2" Margin="5" Command="{Binding LR1IndividualSecondViewModelCommand}"></Button>
+                        </StackPanel>
+                    </Border>
+                    <Label Content="Лабораторна робота №2"></Label>
+                    <Border BorderBrush="Black" BorderThickness="0, 1,0,1">
+                        <StackPanel Orientation="Vertical">
+                            <Button Content="Сніжинка Коха" Margin="5" Command="{Binding SnowflakeViewModelCommand}"></Button>
+                            <Button Content="Індивідуальне завдання №1" Margin="5" Command="{Binding LR2IndividualFirstViewModelCommand}"></Button>
+                            <Button Content="Індивідуальне завдання №2" Margin="5" Command="{Binding LR2IndividualSecondViewModelCommand}"></Button>
+                        </StackPanel>
+                    </Border>
+                    <Label Content="Лабораторна робота №3"></Label>
+                    <Border BorderBrush="Black" BorderThickness="0, 1,0,1">
+                        <StackPanel Orientation="Vertical">
+                            <Button Content="Множина Мандельборта" Margin="5" Command="{Binding MandelbortViewModelCommand}"></Button>
+                            <Button Content="Індивідуальне завдання №1" Margin="5" Command="{Binding LR3IndividualFirstViewModelCommand}"></Button>
+                            <Button Content="Індивідуальне завдання №2" Margin="5" Command="{Binding LR3IndividualSecondViewModelCommand}"></Button>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </Border>
+            <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+                <ContentControl Margin="10"
+                                Content="{Binding CurrentView}">
+                </ContentControl>
+            </Border>
+        </Grid>
+    </Border>
 </Window>

@@ -5,6 +5,7 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+    <UseWindowsForms>False</UseWindowsForms>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,17 +14,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="UI\ViewModels\LR1\" />
+    <Folder Include="UI\Resources\Images\" />
     <Folder Include="UI\ViewModels\LR2\" />
-    <Folder Include="UI\ViewModels\LR3\" />
-    <Folder Include="UI\ViewModels\LR4\" />
-    <Folder Include="UI\ViewModels\LR5\" />
-    <Folder Include="UI\Resources\" />
-    <Folder Include="UI\Views\LR1\" />
-    <Folder Include="UI\Views\LR2\" />
-    <Folder Include="UI\Views\LR3\" />
-    <Folder Include="UI\Views\LR4\" />
-    <Folder Include="UI\Views\LR5\" />
   </ItemGroup>
 
 </Project>
