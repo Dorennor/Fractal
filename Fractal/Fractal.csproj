@@ -9,12 +9,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="UI\Resources\**" />
+    <EmbeddedResource Remove="UI\Resources\**" />
+    <None Remove="UI\Resources\**" />
+    <Page Remove="UI\Resources\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="ScottPlot" Version="4.1.33" />
     <PackageReference Include="ScottPlot.WPF" Version="4.1.33" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="UI\Resources\Images\" />
+    <Folder Include="Extensions\" />
     <Folder Include="UI\ViewModels\LR2\" />
   </ItemGroup>
 

@@ -1,13 +1,12 @@
-﻿using System;
+﻿using Fractal.Extensions;
+using System;
 using System.Drawing;
-using System.IO;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 
 namespace Fractal.UI.Views.LR1;
@@ -87,7 +86,7 @@ public partial class IndividualFirstView : UserControl
             }
         }
 
-        FractalImage.Source = BitmapToImageSource(_fern);
+        FractalImage.Source = _fern.GetImageSource();
     }
 
     private void DrawButton_OnClick(object sender, RoutedEventArgs e)
@@ -119,25 +118,12 @@ public partial class IndividualFirstView : UserControl
 
         _graph = Graphics.FromImage(_fern);
 
+        _graph.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+
+
         _graph.Clear(Color.Black);
 
         DrawFern(width, height, Convert.ToDouble(imageBoxSize));
-    }
-
-    private BitmapImage BitmapToImageSource(Bitmap bitmap)
-    {
-        using (MemoryStream memory = new MemoryStream())
-        {
-            bitmap.Save(memory, System.Drawing.Imaging.ImageFormat.Bmp);
-            memory.Position = 0;
-            BitmapImage bitmapimage = new BitmapImage();
-            bitmapimage.BeginInit();
-            bitmapimage.StreamSource = memory;
-            bitmapimage.CacheOption = BitmapCacheOption.OnLoad;
-            bitmapimage.EndInit();
-
-            return bitmapimage;
-        }
     }
 
     private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
@@ -153,7 +139,7 @@ public partial class IndividualFirstView : UserControl
 
     private void StagedDraw(float MaxX, float MinX, float MaxY, float MinY)
     {
-        for (double i = 12; i < 981; i+= 0.5)
+        for (double i = 12; i < 981; i += 0.5)
         {
             var imageBoxSize = Convert.ToInt32(i);
 
@@ -173,7 +159,6 @@ public partial class IndividualFirstView : UserControl
                 DrawButton.IsEnabled = false;
                 StagedDrawButton.IsEnabled = false;
                 Size.IsEnabled = false;
-
             }), DispatcherPriority.Background);
 
             Thread.Sleep(20);
@@ -185,6 +170,5 @@ public partial class IndividualFirstView : UserControl
             StagedDrawButton.IsEnabled = true;
             Size.IsEnabled = true;
         }), DispatcherPriority.Background);
-        
     }
 }
