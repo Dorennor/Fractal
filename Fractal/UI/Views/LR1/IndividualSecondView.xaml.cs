@@ -46,7 +46,9 @@ public partial class IndividualSecondView : UserControl
         map = new Bitmap(int.Parse(Width.Text), int.Parse(Height.Text));
         g = Graphics.FromImage(map);
         g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-        p = new Pen(Color.BlueViolet);
+        p = new Pen(Color.Green);
+
+        g.Clear(Color.White);
 
         DrawTree(300, 450, int.Parse(IterationsNumber.Text), angle);
 

@@ -26,13 +26,15 @@ public partial class MandelbortView : UserControl
 
     private void DrawButton_OnClick(object sender, RoutedEventArgs e)
     {
-        p = new Pen(Color.BlueViolet, 2);
+        p = new Pen(Color.DarkRed, 2);
         map = new Bitmap(int.Parse(Width.Text), int.Parse(Height.Text));
         graphics = Graphics.FromImage(map);
         graphics.Clear(Color.Black);
         graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
         DrawFractal(int.Parse(Width.Text), int.Parse(Height.Text), p, graphics);
+
+        map.RotateFlip(RotateFlipType.Rotate90FlipNone);
 
         FractalImage.Source = map.GetImageSource();
     }
@@ -68,7 +70,7 @@ public partial class MandelbortView : UserControl
                 }
                 if (n < iterations)
                 {
-                    pen.Color = Color.FromArgb(255, 40, (n * 2) % 255, (n * 30) % 255);
+                    pen.Color = Color.FromArgb(200, (n * 20) % 255, (n * 2) % 255, 0);
                     g.DrawRectangle(pen, xc + x, yc + y, 1, 1);
                 }
             }

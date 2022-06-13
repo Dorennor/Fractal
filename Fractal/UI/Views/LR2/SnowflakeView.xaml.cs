@@ -21,13 +21,13 @@ public partial class SnowflakeView : UserControl
 
     private void DrawButton_OnClick(object sender, RoutedEventArgs e)
     {
-        pen1 = new Pen(Color.Indigo, 1);
-        pen2 = new Pen(Color.BlueViolet, 1);
+        pen1 = new Pen(Color.Green, 1);
+        pen2 = new Pen(Color.DarkGreen, 1);
 
         map = new Bitmap(int.Parse(Width.Text), int.Parse(Height.Text));
         graphics = Graphics.FromImage(map);
         graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-        graphics.Clear(Color.Black);
+        graphics.Clear(Color.White);
 
         var point1 = new PointF(200, 200);
         var point2 = new PointF(500, 200);

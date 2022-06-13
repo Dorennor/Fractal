@@ -1,4 +1,5 @@
-﻿using Fractal.Extensions;
+﻿using System;
+using Fractal.Extensions;
 using System.Drawing;
 using System.Text.RegularExpressions;
 using System.Windows;
@@ -10,8 +11,7 @@ namespace Fractal.UI.Views.LR2;
 public partial class IndividualFirstView : UserControl
 {
     private Pen p;
-    private SolidBrush background;
-    private Graphics graphics;
+    private Graphics g;
     public Bitmap map;
 
     private int i = 15;
@@ -21,21 +21,34 @@ public partial class IndividualFirstView : UserControl
         InitializeComponent();
     }
 
+    private void FirstLine(int x, int y, double a, double b, Graphics g)
+    {
+        g.DrawLine(p, x, y, (int)Math.Round(x + a * Math.Cos(b)), (int)Math.Round(y - a * Math.Sin(b)));
+    }
+
+    private void Draw(int x, int y, double a, double b, Graphics g)
+    {
+        if (a > 1)
+        {
+            FirstLine(x, y, a, b, g);
+            x = (int)Math.Round(x + a * Math.Cos(b));
+            y = (int)Math.Round(y - a * Math.Sin(b));
+            Draw(x, y, a * 0.4, b - 14 * Math.PI / 30, g);
+            Draw(x, y, a * 0.4, b + 14 * Math.PI / 30, g);
+            Draw(x, y, a * 0.7, b + Math.PI / 30, g);
+        }
+    }
+
     private void DrawButton_OnClick(object sender, RoutedEventArgs e)
     {
-        p = new Pen(Color.BlueViolet, 2);
-        background = new SolidBrush(Color.Black);
+        p = new Pen(Color.Green, 2);
         map = new Bitmap(int.Parse(Width.Text), int.Parse(Height.Text));
-        graphics = Graphics.FromImage(map);
-        graphics.Clear(Color.Black);
-        graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+        g = Graphics.FromImage(map);
+        g.Clear(Color.White);
+        g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+        g.FillRectangle(Brushes.White, 0, 0, 600, 600);
 
-        graphics.FillRectangle(background, 0, 0, int.Parse(Width.Text), int.Parse(Height.Text));
-
-        DrawLevy(graphics, p, background, 250, 400, 160, 160, i);
-        DrawLevy(graphics, p, background, 400, 400, 160, 310, i);
-        DrawLevy(graphics, p, background, 400, 250, 310, 310, i);
-        DrawLevy(graphics, p, background, 250, 250, 310, 160, i);
+        Draw(240, 350, 100, Math.PI / 2, g);
 
         FractalImage.Source = map.GetImageSource();
     }

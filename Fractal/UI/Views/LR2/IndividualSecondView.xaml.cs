@@ -52,7 +52,7 @@ public partial class IndividualSecondView : UserControl
 
     private void DrawButton_OnClick(object sender, RoutedEventArgs e)
     {
-        p = new Pen(Color.BlueViolet, 2);
+        p = new Pen(Color.DarkRed, 2);
         map = new Bitmap(int.Parse(Width.Text), int.Parse(Height.Text));
         graphics = Graphics.FromImage(map);
         graphics.Clear(Color.Black);
