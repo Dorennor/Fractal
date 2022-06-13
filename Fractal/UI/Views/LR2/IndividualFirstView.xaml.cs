@@ -32,15 +32,15 @@ public partial class IndividualFirstView : UserControl
 
         graphics.FillRectangle(background, 0, 0, int.Parse(Width.Text), int.Parse(Height.Text));
 
-        Draw_Levy(graphics, p, background, 250, 400, 160, 160, i);
-        Draw_Levy(graphics, p, background, 400, 400, 160, 310, i);
-        Draw_Levy(graphics, p, background, 400, 250, 310, 310, i);
-        Draw_Levy(graphics, p, background, 250, 250, 310, 160, i);
+        DrawLevy(graphics, p, background, 250, 400, 160, 160, i);
+        DrawLevy(graphics, p, background, 400, 400, 160, 310, i);
+        DrawLevy(graphics, p, background, 400, 250, 310, 310, i);
+        DrawLevy(graphics, p, background, 250, 250, 310, 160, i);
 
         FractalImage.Source = map.GetImageSource();
     }
 
-    private void Draw_Levy(Graphics gr, Pen p, SolidBrush fon, int x1, int x2, int y1, int y2, int i)
+    private void DrawLevy(Graphics gr, Pen p, SolidBrush fon, int x1, int x2, int y1, int y2, int i)
     {
         if (i == 0)
         {
@@ -51,8 +51,8 @@ public partial class IndividualFirstView : UserControl
             int x3 = (x1 + x2) / 2 + (y2 - y1) / 2;
             int y3 = (y1 + y2) / 2 - (x2 - x1) / 2;
 
-            Draw_Levy(gr, p, fon, x1, x3, y1, y3, i - 1);
-            Draw_Levy(gr, p, fon, x3, x2, y3, y2, i - 1);
+            DrawLevy(gr, p, fon, x1, x3, y1, y3, i - 1);
+            DrawLevy(gr, p, fon, x3, x2, y3, y2, i - 1);
         }
     }
 
