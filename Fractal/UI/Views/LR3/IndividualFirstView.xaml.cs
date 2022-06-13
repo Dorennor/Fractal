@@ -20,22 +20,38 @@ public partial class IndividualFirstView : UserControl
         InitializeComponent();
     }
 
-    private void DrawFractal(int degree, int x, int y, Pen myPen, Graphics g)
+    public void DrawFractal(int w, int h, Graphics g, Pen pen)
     {
-        if (degree == 1)
-        {
-            graphics.DrawRectangle(myPen, x, y, 1, 1);
-        }
-        else
-        {
-            int dist = (int)Math.Pow(3, degree - 1);
+        double cRe, cIm;
+        double newRe, newIm, oldRe, oldIm;
+        double zoom = 1, moveX = 0, moveY = 0;
+        int maxIterations = 300;
 
-            DrawFractal(degree - 1, x, y, myPen, g);
-            DrawFractal(degree - 1, x - dist, y - dist, myPen, g);
-            DrawFractal(degree - 1, x - dist, y + dist, myPen, g);
-            DrawFractal(degree - 1, x + dist, y - dist, myPen, g);
-            DrawFractal(degree - 1, x + dist, y + dist, myPen, g);
-        }
+        cRe = -0.70176;
+        cIm = -0.3842;
+
+        for (int x = 0; x < w; x++)
+            for (int y = 0; y < h; y++)
+            {
+                newRe = 1.5 * (x - w / 2) / (0.5 * zoom * w) + moveX;
+                newIm = (y - h / 2) / (0.5 * zoom * h) + moveY;
+
+                int i;
+
+                for (i = 0; i < maxIterations; i++)
+                {
+                    oldRe = newRe;
+                    oldIm = newIm;
+
+                    newRe = oldRe * oldRe - oldIm * oldIm + cRe;
+                    newIm = 2 * oldRe * oldIm + cIm;
+
+                    if ((newRe * newRe + newIm * newIm) > 4) break;
+                }
+
+                pen.Color = Color.FromArgb(255, (i * 20) % 255, 0, (i * 20) % 255);
+                g.DrawRectangle(pen, x, y, 1, 1);
+            }
     }
 
     private void DrawSimilarFractal(int degree, int x, int y, Pen myPen, Graphics g)
@@ -63,7 +79,7 @@ public partial class IndividualFirstView : UserControl
         graphics.Clear(Color.Black);
         graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
-        DrawFractal(5, 150, 200, pen1, graphics);
+        DrawFractal(840, 620, graphics, pen1);
 
         FractalImage.Source = map.GetImageSource();
     }
@@ -87,8 +103,8 @@ public partial class IndividualFirstView : UserControl
         graphics.Clear(Color.Black);
         graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
-        DrawFractal(5, 150, 200, pen1, graphics);
-        DrawSimilarFractal(5, 150, 200, pen2, graphics);
+        //DrawFractal(5, 150, 200, pen1, graphics);
+        ////DrawSimilarFractal(5, 150, 200, pen2, graphics);
 
         FractalImage.Source = map.GetImageSource();
     }

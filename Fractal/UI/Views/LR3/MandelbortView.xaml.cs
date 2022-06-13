@@ -39,7 +39,7 @@ public partial class MandelbortView : UserControl
 
     public void DrawFractal(int Width, int Height, Pen pen, Graphics g)
     {
-        int iterations = 50, max = 3;
+        int iterations = 100, max = 5;
         int xc, yc;
         int x, y, n;
         double p, q;
@@ -68,7 +68,7 @@ public partial class MandelbortView : UserControl
                 }
                 if (n < iterations)
                 {
-                    pen.Color = Color.FromArgb(255, 40, (n * 2) % 255, (n * 30) % 255);
+                    pen.Color = Color.FromArgb(255, (n * 20) % 255, 0, (n * 20) % 255);
                     g.DrawRectangle(pen, xc + x, yc + y, 1, 1);
                 }
             }
