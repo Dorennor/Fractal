@@ -29,12 +29,12 @@ public partial class MandelbortView : UserControl
         p = new Pen(Color.DarkRed, 2);
         map = new Bitmap(int.Parse(Width.Text), int.Parse(Height.Text));
         graphics = Graphics.FromImage(map);
-        graphics.Clear(Color.Black);
+        graphics.Clear(Color.White);
         graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
         DrawFractal(int.Parse(Width.Text), int.Parse(Height.Text), p, graphics);
 
-        map.RotateFlip(RotateFlipType.Rotate90FlipNone);
+        //map.RotateFlip(RotateFlipType.Rotate90FlipNone);
 
         FractalImage.Source = map.GetImageSource();
     }
@@ -70,7 +70,7 @@ public partial class MandelbortView : UserControl
                 }
                 if (n < iterations)
                 {
-                    pen.Color = Color.FromArgb(200, (n * 20) % 255, (n * 2) % 255, 0);
+                    pen.Color = Color.FromArgb(255, (n * 50) % 255, (n * 2) % 255, 0);
                     g.DrawRectangle(pen, xc + x, yc + y, 1, 1);
                 }
             }

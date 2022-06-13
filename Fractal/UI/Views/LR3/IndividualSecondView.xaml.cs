@@ -31,7 +31,7 @@ public partial class IndividualSecondView : UserControl
 
     private void DrawButton_OnClick(object sender, RoutedEventArgs e)
     {
-        pen = new Pen(Color.BlueViolet, 1);
+        pen = new Pen(Color.DarkRed, 1);
 
         map = new Bitmap(int.Parse(Width.Text), int.Parse(Height.Text));
         graphics = Graphics.FromImage(map);
@@ -70,7 +70,7 @@ public partial class IndividualSecondView : UserControl
                     d.y = Math.Abs(t.y - z.y);
                     n++;
                 }
-                pen.Color = Color.FromArgb(255, (n * 9) % 255, 0, (n * 9) % 255);
+                pen.Color = Color.FromArgb(200, (n * 20) % 255, 0, (n * 1) % 255);
                 g.DrawRectangle(pen, mx + x, my + y, 1, 1);
             }
     }

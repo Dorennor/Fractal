@@ -11,8 +11,8 @@ namespace Fractal.UI.Views.LR3;
 public partial class IndividualFirstView : UserControl
 {
     private Graphics graphics;
-    private Pen pen1 = new Pen(Color.BlueViolet, 3);
-    private Pen pen2 = new Pen(Color.Yellow, 3);
+    private Pen pen1 = new Pen(Color.Orange, 3);
+    private Pen pen2 = new Pen(Color.Green, 3);
     public Bitmap map;
 
     public IndividualFirstView()
@@ -60,7 +60,7 @@ public partial class IndividualFirstView : UserControl
     {
         map = new Bitmap(int.Parse(Width.Text), int.Parse(Height.Text));
         graphics = Graphics.FromImage(map);
-        graphics.Clear(Color.Black);
+        graphics.Clear(Color.White);
         graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
 
         DrawFractal(5, 150, 200, pen1, graphics);
